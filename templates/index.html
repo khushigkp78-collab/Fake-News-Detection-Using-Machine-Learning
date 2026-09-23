@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fake News Detector</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+    <nav class="navbar">
+    <div class="logo">🤖 Fake News AI</div>
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+</nav>
+<section class="hero">
+
+    <div class="hero-left">
+
+        <h1>Detect Fake News with AI</h1>
+
+        <p>
+            Analyze news articles instantly using Machine Learning.
+            Fast, accurate and easy to use.
+        </p>
+
+    </div>
+
+    <div class="hero-right">
+
+        🤖
+
+    </div>
+
+</section>
+<div class="container">
+    <div class="top-glow"></div>
+
+<div class="title-section">
+
+    <div class="ai-icon">🤖</div>
+
+    <div>
+
+        <h1>Fake News Detection</h1>
+
+        <p>AI Powered News Verification System</p>
+
+    </div>
+
+</div>
+
+
+
+ <form action="/predict" method="POST" onsubmit="clearResult()">
+       <textarea
+name="news"
+rows="10"
+placeholder="Paste news article here or upload a TXT file...">{{ news }}</textarea>
+        <br><br>
+
+        <input type="file" id="fileInput" accept=".txt">
+
+
+        <br><br>
+
+
+       <div class="btn-group">
+
+<button type="submit">
+🔍 Analyze News
+</button>
+
+<button type="button" onclick="clearText()">
+🗑 Clear
+</button>
+
+</div>
+
+    </form>
+
+
+   {% if prediction %}
+
+<div class="result-card" id="result-card">
+
+    <h3 style="color:yellow;">TEST RESULT CARD</h3>
+
+    <div class="status-icon">
+        {% if "REAL" in prediction %}
+            ✅
+        {% else %}
+            ❌
+        {% endif %}
+    </div>
+
+    <h2>{{ prediction }}</h2>
+
+    <p>⚡ Prediction Time : {{ prediction_time }} ms</p>
+
+    <div class="confidence-box">
+        <p><b>Confidence:</b> {{ confidence }}%</p>
+
+        <div class="progress">
+            <div class="progress-fill" style="width: {{ confidence }}%;"></div>
+        </div>
+    </div>
+
+    <p>🤖 AI Model : Logistic Regression</p>
+
+</div>
+
+{% endif %}
+{% if history %}
+
+<div class="history-card">
+
+    <h2>📜 Recent Predictions</h2>
+
+    {% for item in history %}
+
+    <div class="history-item">
+
+        <p><b>{{ item.result }}</b></p>
+
+        <p>{{ item.news }}</p>
+
+        <small>⚡ {{ item.time }} ms</small>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+<section id="about">
+
+<h2>About This Project</h2>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+
+<h3>🤖 Machine Learning</h3>
+
+<p>Uses AI model to classify news.</p>
+
+</div>
+
+<div class="feature-card">
+
+<h3>⚡ Fast Prediction</h3>
+
+<p>Instant news verification in milliseconds.</p>
+
+</div>
+
+<div class="feature-card">
+
+<h3>📂 TXT Upload</h3>
+
+<p>Upload news directly from text files.</p>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+
+<script>
+
+document.getElementById("fileInput").addEventListener("change", function(event){
+
+    const file = event.target.files[0];
+
+    if(file){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            document.querySelector("textarea").value = e.target.result;
+
+        };
+
+        reader.readAsText(file);
+
+    }
+
+});
+
+
+function clearText(){
+
+    document.querySelector("textarea").value = "";
+
+}
+
+
+</script>
+
+<footer>
+
+<p>AI Fake News Detection System</p>
+
+<p>Python | Flask | Machine Learning</p>
+
+</footer>
+<script>
+function clearResult() {
+    const resultCard = document.getElementById("result-card");
+    if (resultCard) {
+        resultCard.style.display = "none";
+    }
+}
+</script>
+</body>
+
+</html>
