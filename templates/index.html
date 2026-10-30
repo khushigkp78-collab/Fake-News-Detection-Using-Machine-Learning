@@ -111,7 +111,18 @@ placeholder="Paste news article here or upload a TXT file...">{{ news }}</textar
     </div>
 
     <p>🤖 AI Model : Logistic Regression</p>
+{% if ai_message %}
+<div class="ai-box">
+    <h3>🤖 AI Assistant</h3>
 
+    <ul class="ai-list">
+        <li>The AI found writing patterns similar to reliable news.</li>
+        <li>The article contains factual and formal language.</li>
+        <li>No major clickbait indicators were detected.</li>
+        <li>Always verify the news from trusted sources before sharing.</li>
+    </ul>
+</div>
+{% endif %}
 </div>
 
 {% endif %}
